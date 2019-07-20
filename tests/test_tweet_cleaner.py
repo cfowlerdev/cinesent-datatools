@@ -35,7 +35,22 @@ def test_detokenize():
     result = tweet_cleaner.detokenize(['the', 'quick', 'brown', 'fox'])
     assert result == 'the quick brown fox'
 
-def test_clean_tweet():
-    result = tweet_cleaner.clean_tweet("#AQuietPlace ...what a gorgeous...wonderful...and intelligently written acted...directed... #movie ...and...it's got #Aliens ...😐... and... it's scarier than #ghosts ...which #btw do #NOT exist...period #TFSM @watanabewankou @VolarePhoto @JamieBinnie1976 https://t.co/gy7xI1iyXP")
-    assert result == ''
-    
+def test_remove_symbols():
+    result = tweet_cleaner.remove_symbols('1😐2')
+    assert result =='12'
+
+def test_remove_nonascii():
+    result = tweet_cleaner.remove_nonascii('\xa3')
+    assert result == ' '
+
+def test_remove_emoticons():
+    result = tweet_cleaner.remove_emoticons([':-p',':c)'])
+    assert result == []
+
+def test_remove_stopwords():
+    result = tweet_cleaner.remove_stopwords(['the', 'a', 'it'])
+    assert result == []
+
+def test_remove_punctuations():
+    result = tweet_cleaner.remove_punctuations(['.', ':', ';', ','])
+    assert result == []
