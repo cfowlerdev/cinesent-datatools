@@ -1,6 +1,7 @@
 import re
 import nltk
 import string
+import preprocessor as p
 from bs4 import BeautifulSoup
 
 # Download any needed NLTK resources
@@ -174,6 +175,8 @@ def clean_dataset(df):
 	return df
 
 def clean_tweet(text):
+    # Preprocess
+    cleaned_tweet = p.clean(text)
     # HTML decoding
     cleaned_tweet = unescape_text(text)
     # Remove URLs
