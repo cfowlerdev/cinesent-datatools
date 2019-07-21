@@ -12,15 +12,15 @@ def test_remove_mentions():
     result = tweet_cleaner.remove_mentions('This mention @Test is removed')
     assert result == 'This mention  is removed'
 
-def test_translate_negations():
-    result = tweet_cleaner.translate_negations("don't")
+def test_translate_contractions():
+    result = tweet_cleaner.translate_contractions("don't")
     assert result == 'do not'
-    result = tweet_cleaner.translate_negations("won't")
+    result = tweet_cleaner.translate_contractions("won't")
     assert result == 'will not'
-    result = tweet_cleaner.translate_negations("isn't")
+    result = tweet_cleaner.translate_contractions("isn't")
     assert result == 'is not'
-    result = tweet_cleaner.translate_negations("can't")
-    assert result == 'can not'
+    result = tweet_cleaner.translate_contractions("can't")
+    assert result == 'cannot'
     # and so on... and so on...
 
 def test_tokenize():
