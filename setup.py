@@ -19,6 +19,7 @@ setup(
     packages=find_packages(exclude=('tests', 'docs')),
     python_requires='>=2.7,<4',
     install_requires=[
+        'lxml>=4.3.4',
         'nltk>=3.4.4',
         'beautifulsoup4>=4.7.1',
         'tweet-preprocessor>=0.5.0'
