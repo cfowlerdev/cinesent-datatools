@@ -52,5 +52,5 @@ def test_remove_stopwords():
     assert result == []
 
 def test_remove_punctuations():
-    result = tweet_cleaner.remove_punctuations(['.', ':', ';', ','])
-    assert result == []
+    result = tweet_cleaner.remove_punctuations('. ... , ,,, ; ;;; :::')
+    assert result == '      '

@@ -179,18 +179,20 @@ def clean_tweet(text):
     cleaned_tweet = p.clean(text)
     # HTML decoding
     cleaned_tweet = unescape_text(text)
+    # Lower cased
+    cleaned_tweet = cleaned_tweet.lower()
     # Remove URLs
     cleaned_tweet = remove_url(cleaned_tweet)
     # Remove mentions (@aliciavikander etc.)
     cleaned_tweet = remove_mentions(cleaned_tweet)
+    # Remove punctuations
+    cleaned_tweet = remove_punctuations(cleaned_tweet)
     # Remove non-ascii
     cleaned_tweet = remove_nonascii(cleaned_tweet)
     # Remove symbols
     cleaned_tweet = remove_symbols(cleaned_tweet)
     # Decode
     cleaned_tweet = decode_text(cleaned_tweet)
-    # Lower cased
-    cleaned_tweet = cleaned_tweet.lower()
     # Translate contractions
     cleaned_tweet = translate_contractions(cleaned_tweet)
     # Tokenize
@@ -201,8 +203,6 @@ def clean_tweet(text):
     tokenized_tweet = remove_stopwords(tokenized_tweet)
     # Emoticons
     tokenized_tweet = remove_emoticons(tokenized_tweet)
-    # Punctuations
-    tokenized_tweet = remove_punctuations(tokenized_tweet)
     # Join tokenized words back to text
     cleaned_tweet = detokenize(tokenized_tweet)
     return cleaned_tweet
@@ -222,6 +222,13 @@ def remove_nonascii(text):
 
 def remove_symbols(text):
     return symbols.sub('', text)
+
+def remove_punctuations(text):
+    filtered = ''
+    for c in text:
+        if c not in string.punctuation:
+            filtered += c
+    return re.sub(r'[^\w\s]','',filtered)
 
 def translate_contractions(text):
     return contractions_pattern.sub(lambda x: contractions_dic[x.group()], text)
@@ -253,13 +260,6 @@ def remove_stopwords(word_tokens):
     filtered = []
     for word in word_tokens:
         if word not in stop_words:
-            filtered.append(word)
-    return filtered
-
-def remove_punctuations(word_tokens):
-    filtered = []
-    for word in word_tokens:
-        if word not in string.punctuation:
             filtered.append(word)
     return filtered
 
