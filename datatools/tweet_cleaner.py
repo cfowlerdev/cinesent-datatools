@@ -1,7 +1,6 @@
 import re
 import nltk
 import string
-import preprocessor as p
 from bs4 import BeautifulSoup
 
 # Download any needed NLTK resources
@@ -175,8 +174,6 @@ def clean_dataset(df):
 	return df
 
 def clean_tweet(text):
-    # Preprocess
-    cleaned_tweet = p.clean(text)
     # HTML decoding
     cleaned_tweet = unescape_text(text)
     # Lower cased
@@ -185,6 +182,8 @@ def clean_tweet(text):
     cleaned_tweet = remove_url(cleaned_tweet)
     # Remove mentions (@aliciavikander etc.)
     cleaned_tweet = remove_mentions(cleaned_tweet)
+    # Remove hashtags
+    cleaned_tweet = remove_hashtags(cleaned_tweet)
     # Remove punctuations
     cleaned_tweet = remove_punctuations(cleaned_tweet)
     # Remove non-ascii
@@ -215,7 +214,12 @@ def remove_url(text):
 	return re.sub(r'https?://[A-Za-z0-9./]+', '', text)
 
 def remove_mentions(text):
-	return re.sub(r'@[A-Za-z0-9]+', '', text)
+    pattern = re.compile(r"(?<![A-Za-z0-9_!@#\$%&*])@(([A-Za-z0-9_]){20}(?!@))|(?<![A-Za-z0-9_!@#\$%&*])@(([A-Za-z0-9_]){1,19})(?![A-Za-z0-9_]*@)")
+    return pattern.sub(' ', text)
+
+def remove_hashtags(text):
+    pattern = re.compile(r"(?<![A-Za-z0-9_!@#\$%&*])#(([A-Za-z0-9_]){140}(?!@))|(?<![A-Za-z0-9_!@#\$%&*])#(([A-Za-z0-9_]){1,140})(?![A-Za-z0-9_]*@)")
+    return pattern.sub(' ', text)
 
 def remove_nonascii(text):
     return re.sub(r'[^\x00-\x7F]+',' ', text)

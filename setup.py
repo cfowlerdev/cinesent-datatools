@@ -10,7 +10,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='cinesent_datatools',
-    version='0.0.2',
+    version='0.0.3',
     description='Tools for data cleaning and preparation for analysis',
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -21,7 +21,6 @@ setup(
     install_requires=[
         'lxml>=4.3.4',
         'nltk>=3.4.4',
-        'beautifulsoup4>=4.7.1',
-        'tweet-preprocessor>=0.5.0'
+        'beautifulsoup4>=4.7.1'
     ]
 )

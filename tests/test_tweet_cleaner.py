@@ -10,7 +10,11 @@ def test_remove_url():
 
 def test_remove_mentions():
     result = tweet_cleaner.remove_mentions('This mention @Test is removed')
-    assert result == 'This mention  is removed'
+    assert result == 'This mention   is removed'
+
+def test_remove_hashtags():
+    result = tweet_cleaner.remove_hashtags('This hashtag #HaSH7ag is removed')
+    assert result == 'This hashtag   is removed'
 
 def test_translate_contractions():
     result = tweet_cleaner.translate_contractions("don't")
